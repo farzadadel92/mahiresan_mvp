@@ -27,7 +27,13 @@ const Header = () => {
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4 sm:px-6">
+      <div className="flex items-center justify-center h-14 w-full bg-blue-100">
+        <p className="text-black">
+          <span className="font-bold">تخفیف ویژه</span> برای اولین خرید از سایت ماهی‌رسان!
+        </p>
+      </div>
+
+      <div className="container p-3 mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center gap-10">
             {/* Logo */}

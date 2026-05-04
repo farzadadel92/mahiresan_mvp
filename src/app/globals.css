@@ -1,19 +1,72 @@
+/* src/app/globals.css */
 @import "tailwindcss";
 
-:root {
-  
+/* Persian Font Configuration */
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('/fonts/Vazirmatn-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-@theme inline {
-  
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('/fonts/Vazirmatn-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    
+    --background: #0a0a0a;
+    --foreground: #ededed;
   }
 }
 
 body {
-  
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+}
+
+/* RTL Support */
+* {
+  direction: rtl;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Number Format for Persian */
+.persian-number {
+  font-feature-settings: "ss02";
 }

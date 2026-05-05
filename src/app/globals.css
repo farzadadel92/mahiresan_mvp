@@ -70,3 +70,12 @@ html {
 .persian-number {
   font-feature-settings: "ss02";
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

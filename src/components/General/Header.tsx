@@ -26,7 +26,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className="bg-white shadow-sm">
       <div className="flex items-center justify-center h-14 w-full bg-blue-100">
         <p className="text-black">
           <span className="font-bold">تخفیف ویژه</span> برای اولین خرید از سایت ماهی‌رسان!
@@ -72,7 +72,7 @@ const Header = () => {
               href="/cart"
               className="hidden sm:flex relative p-2 text-gray-600 hover:text-blue-600 transition-colors"
             >
-              <BagIcon className="" />
+              <BagIcon hasBackground={true} />
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                 0
               </span>

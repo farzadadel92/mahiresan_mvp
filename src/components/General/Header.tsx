@@ -1,11 +1,32 @@
+// src/components/layout/Header.tsx
 import Link from "next/link";
-import { useState } from "react";
-import { Search, Menu, X, User, ShoppingBag, ChevronDown } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Search, Menu, X, User, ShoppingBag, ChevronLeft } from "lucide-react";
 import Image from 'next/image';
-import BagIcon from "@/public/icons/BagIcon";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close mobile menu on resize to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const navLinks = [
     { name: "دسته بندی محصولات", href: "/categories" },
@@ -26,36 +47,47 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white shadow-sm">
-      <div className="flex items-center justify-center h-14 w-full bg-blue-100">
-        <p className="text-black">
-          <span className="font-bold">تخفیف ویژه</span> برای اولین خرید از سایت ماهی‌رسان!
+    <header className={`bg-white transition-shadow duration-300 ${isScrolled ? 'shadow-md' : 'shadow-sm'}`}>
+      {/* Top Bar - Responsive */}
+      <div 
+        className="flex items-center justify-center h-10 sm:h-12 bg-blue-100 bg-cover bg-center px-3 sm:px-4"
+        style={{ backgroundImage: "url('/images/header/top-bar-background.png')" }}
+      >
+        <p className="flex text-black gap-2 sm:gap-3 text-xs sm:text-sm md:text-base items-center">
+          <span className="font-bold">تخفیف ویژه</span> 
+          <span className="hidden xs:inline">برای اولین خرید از سایت ماهی‌رسان!</span>
+          <span className="inline xs:hidden">اولین خرید!</span>
+          <span className="bg-white rounded-full text-gray-400 justify-center items-center inline-flex p-0.5 sm:p-1">
+            <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4" />
+          </span>
         </p>
       </div>
 
-      <div className="container p-3 mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-20">
-          <div className="flex items-center gap-10">
+      {/* Main Header */}
+      <div className="container mx-auto px-3 sm:px-4 md:px-6">
+        <div className="flex items-center justify-between h-16 sm:h-20 gap-3 sm:gap-4">
+          {/* Left Section - Logo & Navigation */}
+          <div className="flex items-center gap-4 md:gap-6 lg:gap-10">
             {/* Logo */}
-            <Link href="/" className="block">
+            <Link href="/" className="block shrink-0">
               <Image
                 src="/images/logo/mahiresan_logo.png"
                 alt="Logo"
-                width={64}
-                height={64}
+                width={48}
+                height={48}
                 priority
-                className="object-contain"
+                className="object-contain w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16"
               />
             </Link>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation - Hidden on mobile/tablet */}
             <nav className="hidden lg:block">
-              <ul className="flex gap-8">
+              <ul className="flex gap-4 xl:gap-8">
                 {navLinks.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="inline-flex items-center text-gray-700 hover:text-blue-600 font-medium text-sm transition-colors border-b-2 border-transparent hover:border-blue-600 py-2"
+                      className="inline-flex items-center text-gray-700 hover:text-blue-600 font-medium text-sm xl:text-base transition-colors border-b-2 border-transparent hover:border-blue-600 py-2"
                     >
                       {link.name}
                     </Link>
@@ -65,26 +97,33 @@ const Header = () => {
             </nav>
           </div>
 
-          {/* Right Side Actions */}
-          <div className="flex items-center gap-4">
-            {/* Cart */}
+          {/* Right Section - Actions */}
+          <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+            {/* Search Button - Mobile */}
+            <button className="lg:hidden p-2 text-gray-600 hover:text-blue-600 transition-colors">
+              <Search className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
+
+            {/* Cart - Hidden on mobile, visible on tablet and up */}
             <Link
               href="/cart"
               className="hidden sm:flex relative p-2 text-gray-600 hover:text-blue-600 transition-colors"
             >
-              <BagIcon hasBackground={true} />
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                0
-              </span>
+              <div className="relative">
+                <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                  0
+                </span>
+              </div>
             </Link>
 
-            {/* User Login */}
+            {/* User Login - Hidden on mobile */}
             <Link
               href="/login"
-              className="hidden sm:flex items-center gap-2 px-5 py-3 text-white bg-blue-800 rounded-lg font-normal transition-colors"
+              className="hidden md:flex items-center gap-2 px-3 py-2 md:px-4 md:py-2.5 lg:px-5 lg:py-3 text-white bg-blue-800 rounded-lg font-normal text-sm md:text-base transition-all hover:bg-blue-700 hover:scale-105"
             >
-              <User className="w-6 h-6" fill="white" stroke="white" />
-              <span>ورود / ثبت نام</span>
+              <User className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" fill="white" stroke="white" />
+              <span className="hidden sm:inline">ورود / ثبت نام</span>
             </Link>
 
             {/* Mobile Menu Toggle */}
@@ -93,26 +132,27 @@ const Header = () => {
               className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <>
           <div
-            className="lg:hidden fixed inset-0 bg-black/50 z-40 top-[72px]"
+            className="lg:hidden fixed inset-0 bg-black/50 z-40"
+            style={{ top: 'calc(64px + 40px)' }}
             onClick={() => setIsMobileMenuOpen(false)}
           />
-          <div className="lg:hidden fixed right-0 top-[72px] bottom-0 w-full max-w-sm bg-white shadow-xl z-40 overflow-y-auto animate-slideInRight">
-            <div className="p-5">
-              {/* Search */}
+          <div className="lg:hidden fixed right-0 bottom-0 w-full max-w-sm bg-white shadow-xl z-40 overflow-y-auto animate-slideInRight" style={{ top: 'calc(64px + 40px)' }}>
+            <div className="p-4 sm:p-5 md:p-6">
+              {/* Search Input */}
               <div className="relative mb-6">
                 <input
                   type="text"
-                  placeholder="جستجو..."
+                  placeholder="جستجو در محصولات..."
                   className="w-full px-4 py-3 pr-10 border border-gray-200 rounded-xl bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 />
                 <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -128,7 +168,7 @@ const Header = () => {
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       <span className="text-xl">{link.icon}</span>
-                      <span className="font-medium">{link.name}</span>
+                      <span className="font-medium text-sm sm:text-base">{link.name}</span>
                     </Link>
                   </li>
                 ))}
@@ -138,19 +178,22 @@ const Header = () => {
               <div className="space-y-3">
                 <Link
                   href="/login"
-                  className="flex items-center justify-center gap-2 w-full py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors"
+                  className="flex items-center justify-center gap-2 w-full py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors text-sm sm:text-base"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <User className="w-4 h-4" />
+                  <User className="w-4 h-4 sm:w-5 sm:h-5" />
                   ورود / ثبت نام
                 </Link>
                 <Link
                   href="/cart"
-                  className="flex items-center justify-center gap-2 w-full py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-colors"
+                  className="flex items-center justify-center gap-2 w-full py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-colors text-sm sm:text-base"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <ShoppingBag className="w-4 h-4" />
-                  سبد خرید
+                  <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
+                  مشاهده سبد خرید
+                  <span className="mr-auto bg-red-500 text-white text-xs rounded-full px-2 py-0.5">
+                    0
+                  </span>
                 </Link>
               </div>
             </div>
@@ -169,6 +212,13 @@ const Header = () => {
         }
         .animate-slideInRight {
           animation: slideInRight 0.3s ease-out;
+        }
+        
+        @media (max-width: 480px) {
+          .container {
+            padding-left: 12px;
+            padding-right: 12px;
+          }
         }
       `}</style>
     </header>

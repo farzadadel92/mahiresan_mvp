@@ -2,20 +2,10 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import BagIcon from "@/public/icons/BagIcon";
-
-interface ProductCardProps {
-  id: string;
-  name: string;
-  price: number;
-  originalPrice?: number;
-  discount?: number;
-  image: string;
-  origin?: string;
-  vendorName: string; // Added vendor name
-}
+import { ProductCardProps } from '@/src/types/product.types';
 
 const ProductCard = ({ 
-  id, 
+  // id, 
   name, 
   price, 
   originalPrice, 

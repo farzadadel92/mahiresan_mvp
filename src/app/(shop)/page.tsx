@@ -13,8 +13,7 @@ import {
   featuredProducts, 
   freshProducts, 
   bestSellingProducts, 
-  faqItems, 
-  blogPosts 
+  blogPosts,
 } from '../../mock/shop/data';
 
 // Hero Section Component
@@ -97,7 +96,7 @@ const BenefitsSection = () => {
   return (
     <section className="flex flex-col mb-12 bg-white rounded-xl p-4 md:p-6 lg:p-8 gap-8 md:gap-10">
       {/* Benefit 1 */}
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-center">
+      {/* <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-center">
         <div className="flex flex-col gap-6 lg:gap-10 text-center lg:text-right">
           <h1 className="text-stone-800 font-bold text-2xl md:text-3xl lg:text-4xl">
             تأمین گسترده از سواحل شمال تا جنوب ایران
@@ -106,7 +105,7 @@ const BenefitsSection = () => {
             از دریای خزر تا خلیج فارس و دریای عمان؛ ماهی‌رسان با شبکه‌ای گسترده از تأمین‌کنندگان محلی، محصولات تازه دریایی را مستقیماً از استان‌های ساحلی کشور تهیه کرده و با بسته‌بندی حرفه‌ای، به سراسر ایران ارسال می‌کند
           </p>
         </div>
-      </div>
+      </div> */}
 
       {/* Benefit 2 */}
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-center">
@@ -155,6 +154,26 @@ const BenefitsSection = () => {
 // FAQ Section Component
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = React.useState<number | null>(null);
+
+  // FAQ items data
+  const faqItems = [
+    {
+      question: "آیا امکان ارسال به تمام نقاط ایران وجود دارد؟",
+      answer: "بله، ما به تمام نقاط ایران ارسال داریم."
+    },
+    {
+      question: "چگونه مطمئن شویم محصول تازه است؟",
+      answer: "تمام محصولات ما مستقیماً از دریا صید و در سریعترین زمان ممکن ارسال می‌شوند."
+    },
+    {
+      question: "آیا محصولات منجمد شده نیز وجود دارد؟",
+      answer: "بله، ما هم محصولات تازه و هم محصولات منجمد با کیفیت را عرضه می‌کنیم."
+    },
+    {
+      question: "آیا امکان خرید فیله‌شده وجود دارد؟",
+      answer: "بله، می‌توانید در سفارش خود درخواست فیله کردن ماهی را ثبت کنید."
+    },
+  ];
 
   return (
     <section className="flex flex-col gap-4 mb-20">

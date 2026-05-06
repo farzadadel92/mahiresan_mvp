@@ -5,25 +5,8 @@ import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ProductCard from './ProductCard';
 
-export interface Product {
-  id: string;
-  name: string;
-  price: number;
-  originalPrice?: number;
-  discount?: number;
-  image: string;
-  origin?: string;
-  vendorName: string;
-}
+import { CardSectionProps } from '@/src/types/ui.types';
 
-interface CardSectionProps {
-  title?: string;
-  seeAllLink?: string;
-  products: Product[];
-  className?: string;
-  showArrows?: boolean;
-  slidesToShow?: number;
-}
 
 export default function CardSection({
   title,

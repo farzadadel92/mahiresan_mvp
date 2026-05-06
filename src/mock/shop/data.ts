@@ -1,56 +1,5 @@
-// src/app/(shop)/data/homePageData.ts
-
-export interface Category {
-  title: string;
-  description: string;
-  image: string;
-  href: string;
-}
-
-export interface Product {
-  id: string;
-  name: string;
-  price: number;
-  originalPrice?: number;
-  discount?: number;
-  image: string;
-  origin: string;
-  vendorName: string;
-}
-
-export interface Feature {
-  icon: string; // We'll use string identifiers since React nodes can't be serialized
-  title: string;
-  description: string;
-}
-
-// Categories data
-export const categories: Category[] = [
-  {
-    title: "ماهی تازه، آماده برای پخت",
-    description: "از ماهی سفید شمالی تا سنگسر جنوبی",
-    image: "/images/categories/fresh-fish.jpg",
-    href: "/products?category=fish"
-  },
-  {
-    title: "خاویار درج یک، با استاندارد صادرات",
-    description: "کیفیت ممتاز، بسته‌بندی استاندارد",
-    image: "/images/categories/caviar.jpg",
-    href: "/products?category=caviar"
-  },
-  {
-    title: "مواد اولیه و محصولات مکمل دریایی",
-    description: "انتخابی کامل برای آشپزی روزمره",
-    image: "/images/categories/supplements.jpg",
-    href: "/products?category=supplements"
-  },
-  {
-    title: "میگو تازه جنوب، مستقیم از دریا",
-    description: "میگو درشت صید خلیج فارس و دریای عمان",
-    image: "/images/categories/shrimp.jpg",
-    href: "/products?category=shrimp"
-  }
-];
+// src/mock/data.ts
+import { Product } from "@/src/types/product.types";
 
 // Featured products data
 export const featuredProducts: Product[] = [
@@ -190,54 +139,10 @@ export const bestSellingProducts: Product[] = [
   }
 ];
 
-// Features data (icons will be mapped in the component)
-export const features = [
-  {
-    iconName: "Truck",
-    title: "ارسال سراسری به کشور",
-    description: "تحویل به موقع و سریع"
-  },
-  {
-    iconName: "Package",
-    title: "بسته‌بندی بهداشتی",
-    description: "حفظ و ماندگاری محصول تازه"
-  },
-  {
-    iconName: "Droplet",
-    title: "صید تازه، هر روز",
-    description: "تأمین مستقیم از سه دریا"
-  },
-  {
-    iconName: "Headphones",
-    title: "پشتیبانی همیشگی",
-    description: "پاسخ‌گوی سوالات شما"
-  }
-];
-
 // Cities data
 export const cities: string[] = [
   "چابهار", "گرگان", "بندرانزلی", "بندرعباس", 
   "رشت", "بوشهر", "قشم", "اهواز"
-];
-
-// FAQ items data
-export const faqItems = [
-  {
-    question: "آیا امکان ارسال به تمام نقاط ایران وجود دارد؟",
-    answer: "بله، ما به تمام نقاط ایران ارسال داریم."
-  },
-  {
-    question: "چگونه مطمئن شویم محصول تازه است؟",
-    answer: "تمام محصولات ما مستقیماً از دریا صید و در سریعترین زمان ممکن ارسال می‌شوند."
-  },
-  {
-    question: "آیا محصولات منجمد شده نیز وجود دارد؟",
-    answer: "بله، ما هم محصولات تازه و هم محصولات منجمد با کیفیت را عرضه می‌کنیم."
-  },
-  {
-    question: "آیا امکان خرید فیله‌شده وجود دارد؟",
-    answer: "بله، می‌توانید در سفارش خود درخواست فیله کردن ماهی را ثبت کنید."
-  },
 ];
 
 // Blog posts data

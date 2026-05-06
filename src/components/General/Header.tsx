@@ -55,11 +55,13 @@ const Header = () => {
       >
         <p className="flex text-black gap-2 sm:gap-3 text-xs sm:text-sm md:text-base items-center">
           <span className="font-bold">تخفیف ویژه</span> 
-          <span className="hidden xs:inline">برای اولین خرید از سایت ماهی‌رسان!</span>
-          <span className="inline xs:hidden">اولین خرید!</span>
-          <span className="bg-white rounded-full text-gray-400 justify-center items-center inline-flex p-0.5 sm:p-1">
+          <span className="">برای اولین خرید از سایت ماهی‌رسان!</span>
+          <Link 
+            className="bg-white rounded-full hover:scale-105 text-gray-400 justify-center items-center inline-flex p-0.5 sm:p-1"
+            href={"/"}
+          >
             <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4" />
-          </span>
+          </Link>
         </p>
       </div>
 

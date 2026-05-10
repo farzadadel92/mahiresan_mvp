@@ -1,5 +1,11 @@
-// The new form of MIDDLEWARE_MANIFEST.ts
+// proxy.ts (renamed from middleware.ts)
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-export function proxy() {
-    
+export function proxy(request: NextRequest) {
+  return NextResponse.next();
 }
+
+export const config = {
+  matcher: [],
+};

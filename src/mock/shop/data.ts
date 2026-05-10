@@ -5,6 +5,7 @@ import { Product } from "@/src/types/product.types";
 export const featuredProducts: Product[] = [
   {
     id: "1",
+    vendorId: "1",
     name: "ماهی هامور سفید (صادراتی)",
     price: 730000,
     originalPrice: 855000,
@@ -15,6 +16,7 @@ export const featuredProducts: Product[] = [
   },
   {
     id: "2",
+    vendorId: "2",
     name: "ماهی هامور سفید (صادراتی)",
     price: 730000,
     originalPrice: 855000,
@@ -25,6 +27,7 @@ export const featuredProducts: Product[] = [
   },
   {
     id: "9",
+    vendorId: "9",
     name: "ماهی هامور سفید (صادراتی)",
     price: 730000,
     originalPrice: 855000,
@@ -35,6 +38,7 @@ export const featuredProducts: Product[] = [
   },
   {
     id: "10",
+    vendorId: "10",
     name: "ماهی هامور سفید (صادراتی)",
     price: 730000,
     originalPrice: 855000,
@@ -49,6 +53,7 @@ export const featuredProducts: Product[] = [
 export const freshProducts: Product[] = [
   {
     id: "3",
+    vendorId: "1",
     name: "ماهی هامور سفید (صادراتی)",
     price: 730000,
     image: "/images/products/hamoor-mahi-3.jpg",
@@ -57,6 +62,7 @@ export const freshProducts: Product[] = [
   },
   {
     id: "4",
+    vendorId: "1",
     name: "ماهی هامور سفید (صادراتی)",
     price: 730000,
     image: "/images/products/hamoor-mahi-4.jpg",
@@ -65,6 +71,7 @@ export const freshProducts: Product[] = [
   },
   {
     id: "11",
+    vendorId: "1",
     name: "ماهی هامور سفید (صادراتی)",
     price: 730000,
     image: "/images/products/hamoor-mahi.jpg",
@@ -73,6 +80,7 @@ export const freshProducts: Product[] = [
   },
   {
     id: "12",
+    vendorId: "1",
     name: "ماهی هامور سفید (صادراتی)",
     price: 730000,
     image: "/images/products/hamoor-mahi-2.jpg",
@@ -85,6 +93,7 @@ export const freshProducts: Product[] = [
 export const bestSellingProducts: Product[] = [
   {
     id: "5",
+    vendorId: "1",
     name: "میگو تازه جنوب",
     price: 450000,
     originalPrice: 520000,
@@ -95,6 +104,7 @@ export const bestSellingProducts: Product[] = [
   },
   {
     id: "6",
+    vendorId: "1",
     name: "ماهی قزل‌آلا",
     price: 280000,
     image: "/images/products/trout.jpg",
@@ -103,6 +113,7 @@ export const bestSellingProducts: Product[] = [
   },
   {
     id: "7",
+    vendorId: "1",
     name: "خاویار بلوگا",
     price: 2350000,
     originalPrice: 2800000,
@@ -113,6 +124,7 @@ export const bestSellingProducts: Product[] = [
   },
   {
     id: "8",
+    vendorId: "1",
     name: "ماهی سنگسر",
     price: 890000,
     image: "/images/products/sangasar.jpg",
@@ -121,6 +133,7 @@ export const bestSellingProducts: Product[] = [
   },
   {
     id: "13",
+    vendorId: "1",
     name: "میگو تازه جنوب",
     price: 450000,
     originalPrice: 520000,
@@ -131,6 +144,7 @@ export const bestSellingProducts: Product[] = [
   },
   {
     id: "14",
+    vendorId: "1",
     name: "ماهی قزل‌آلا",
     price: 280000,
     image: "/images/products/trout.jpg",
@@ -152,20 +166,23 @@ export const blogPosts = [
     title: "بهترین انتخاب",
     date: "۱۴۰۳/۰۹/۱۲",
     slug: "sample-1",
-    imagePlaceholder: true
+    imagePlaceholder: true,
+    image: "/images/blog/blog-image.png"
   },
   {
     id: 2,
     title: "بهترین انتخاب",
     date: "۱۴۰۳/۰۹/۱۲",
     slug: "sample-2",
-    imagePlaceholder: true
+    imagePlaceholder: true,
+    image: "/images/blog/blog-image.png"
   },
   {
     id: 3,
     title: "بهترین انتخاب",
     date: "۱۴۰۳/۰۹/۱۲",
     slug: "sample-3",
-    imagePlaceholder: true
+    imagePlaceholder: true,
+    image: "/images/blog/blog-image.png"
   }
 ];

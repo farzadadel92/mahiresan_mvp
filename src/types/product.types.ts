@@ -41,6 +41,7 @@ export interface ProductCardProps {
   image: string;
   origin?: string;
   vendorName: string;
+  city: string;
   onAddToCart?: (id: string) => void;
   layout?: 'grid' | 'horizontal';
 }

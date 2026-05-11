@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import BagIcon from "@/public/icons/BagIcon";
+import { Store } from 'lucide-react';
 import { ProductCardProps } from '@/src/types/product.types';
 
 const ProductCard = ({ 
@@ -12,7 +13,8 @@ const ProductCard = ({
   discount, 
   image, 
   origin, 
-  vendorName 
+  vendorName,
+  city 
 }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   
@@ -22,7 +24,7 @@ const ProductCard = ({
 
   return (
     <div 
-      className="bg-white border-gray-300 border-2 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
+      className="bg-white border-gray-200 border-2 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -30,10 +32,10 @@ const ProductCard = ({
       <div className="relative p-3"> {/* Add padding here */}
         <div className="relative aspect-square">
             <Image
-            src={image}
-            alt={name}
-            fill
-            />
+              src={image}
+              alt={name}
+              fill
+              />
             {discount && (
             <div className="absolute top-4 right-4 bg-red-500 text-white px-1 py-2 rounded-lg text-sm font-bold">
                 {persianFormatPrice(discount)}%
@@ -45,16 +47,20 @@ const ProductCard = ({
             </div>
             )}
         </div>
-        </div>
+      </div>
       
       {/* description */}
       <div className="p-4">
         <h3 className="font-semibold text-gray-800 mb-1 line-clamp-2">{name}</h3>
         
         {/* Vendor name display */}
-        <p className="text-gray-500 text-sm mb-2">فروشنده: {vendorName}</p>
+        <div className='flex gap-2 text-gray-400'>
+          <Store size={24} color="currentColor" />
+          <p className="text-sm mb-2">{city} | {vendorName}</p>
+        </div>
         
-        <div className="flex justify-between mt-8 p-3">
+        {/* Price display */}
+        <div className="flex items-center justify-between mt-8 p-3 border-2 bg-blue-50 rounded-xl">
           <div className="flex flex-col">
             {originalPrice && (
                 <span className="relative text-gray-400 text-sm inline-block">

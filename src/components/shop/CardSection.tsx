@@ -52,6 +52,16 @@ export default function CardSection({
     setMaxIndex(Math.max(0, totalPages - 1));
   }, [products.length, slidesToShowCount]);
 
+  // Update scroll button states on desktop
+  const updateScrollButtons = () => {
+    if (!scrollContainerRef.current || !isDesktop) return;
+    
+    const container = scrollContainerRef.current;
+    const { scrollLeft, scrollWidth, clientWidth } = container;
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1);
+  };
+
   // Desktop: Scroll by full page
   const scrollDesktop = (direction: 'left' | 'right') => {
     if (!scrollContainerRef.current) return;
@@ -69,6 +79,9 @@ export default function CardSection({
     });
     
     setCurrentIndex(newIndex);
+    
+    // Update button states after scroll
+    setTimeout(updateScrollButtons, 300);
   };
 
   // Mobile: Free horizontal scroll with touch
@@ -107,13 +120,9 @@ export default function CardSection({
     const scrollLeft = container.scrollLeft;
     const newIndex = Math.round(scrollLeft / cardWidth);
     setCurrentIndex(newIndex);
-    
-    // Update scroll buttons state for desktop
-    setCanScrollLeft(scrollLeft > 0);
-    setCanScrollRight(scrollLeft + container.clientWidth < container.scrollWidth - 1);
   };
 
-  // Update scroll position on scroll events (for mobile)
+  // Update scroll position on scroll events
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
@@ -124,6 +133,11 @@ export default function CardSection({
         const { scrollLeft, scrollWidth, clientWidth } = container;
         setCanScrollLeft(scrollLeft > 0);
         setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1);
+        
+        // Update current index based on scroll position for desktop
+        const cardWidth = container.clientWidth / slidesToShowCount;
+        const newIndex = Math.round(scrollLeft / (cardWidth * slidesToShowCount));
+        setCurrentIndex(newIndex);
       } else {
         // For mobile: update dots
         const cardWidth = container.clientWidth;
@@ -137,116 +151,128 @@ export default function CardSection({
     return () => container.removeEventListener('scroll', handleScroll);
   }, [isDesktop, slidesToShowCount]);
 
-  return (
-    <section className={`mt-16 sm:mt-20 md:mt-24 lg:mt-28 mb-16 sm:mb-20 md:mb-24 lg:mb-28 ${className}`}>
-      {/* Header */}
-      {(title || seeAllLink) && (
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
-          {title && (
-            <h2 className="text-stone-900 text-2xl sm:text-3xl md:text-4xl font-bold text-center sm:text-right">
-              {title}
-            </h2>
-          )}
-          {seeAllLink && (
-            <Link 
-              href={seeAllLink} 
-              className="text-blue-600 text-base sm:text-lg md:text-xl hover:text-blue-700 transition-colors"
-            >
-              مشاهده همه
-            </Link>
-          )}
-        </div>
-      )}
+  // Initialize button states on mount and when products change
+  useEffect(() => {
+    if (isDesktop && scrollContainerRef.current) {
+      updateScrollButtons();
+    }
+  }, [isDesktop, products, slidesToShowCount]);
 
-      {/* Products Container with Navigation */}
-      <div className="relative mt-8 sm:mt-10 md:mt-12 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 md:gap-10">
-        {/* Desktop Left Button */}
-        {showArrows && isDesktop && (
-          <button
-            className={`hidden sm:flex shrink-0 bg-blue-800 text-white backdrop-blur-sm rounded-lg shadow-lg p-3 sm:p-4 md:p-6 hover:bg-blue-700 hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer ${
-              !canScrollLeft ? 'opacity-40 cursor-not-allowed hover:scale-100' : ''
-            }`}
-            aria-label="Previous products"
-            onClick={() => scrollDesktop('left')}
-            disabled={!canScrollLeft}
-          >
-            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
-          </button>
+  return (
+    <section className={`relative border-2 border-gray-200 rounded-xl p-10 mt-16 sm:mt-20 md:mt-24 lg:mt-28 mb-16 sm:mb-20 md:mb-24 lg:mb-28 ${className}`}>
+      {/* Half-height background layer - now properly behind content */}
+      <div className="absolute rounded-t-xl inset-x-0 top-0 h-1/3 bg-blue-600" style={{ zIndex: 0 }}></div>
+      
+      {/* Content wrapper with higher z-index */}
+      <div className="relative" style={{ zIndex: 1 }}>
+        {/* Header */}
+        {(title || seeAllLink) && (
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 p-1 mb-6">
+            {title && (
+              <h3 className="text-white text-2xl sm:text-3xl md:text-3xl font-bold text-center sm:text-right">
+                {title}
+              </h3>
+            )}
+            {seeAllLink && (
+              <Link 
+                href={seeAllLink} 
+                className="text-white text-base sm:text-lg md:text-lg hover:text-gray-200 transition-colors"
+              >
+                مشاهده همه
+              </Link>
+            )}
+          </div>
         )}
 
-        {/* Scrollable Products Container */}
-        <div 
-          ref={scrollContainerRef}
-          className="flex-1 w-full overflow-x-auto scroll-smooth"
-          style={{ 
-            scrollbarWidth: 'none', 
-            msOverflowStyle: 'none',
-            WebkitOverflowScrolling: 'touch'
-          }}
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-        >
+        {/* Products Container with Navigation */}
+        <div className="relative mt-8 sm:mt-10 md:mt-12 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 md:gap-10">
+          {/* Desktop Left Button */}
+          {showArrows && isDesktop && (
+            <button
+              className="shrink-0 bg-blue-800 text-white backdrop-blur-sm rounded-lg shadow-lg p-3 sm:p-4 md:p-6 hover:bg-blue-700 hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer"
+              aria-label="Previous products"
+              onClick={() => scrollDesktop('left')}
+              style={{ opacity: canScrollLeft ? 1 : 0.4, cursor: canScrollLeft ? 'pointer' : 'not-allowed' }}
+              disabled={!canScrollLeft}
+            >
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+            </button>
+          )}
+
+          {/* Scrollable Products Container */}
           <div 
-            className="flex gap-4 sm:gap-5 md:gap-6"
+            ref={scrollContainerRef}
+            className="flex-1 w-full overflow-x-auto scroll-smooth"
             style={{ 
-              width: 'max-content',
-              minWidth: '100%',
+              scrollbarWidth: 'none', 
+              msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch'
             }}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
           >
-            {products.map((product) => (
-              <div 
-                key={product.id} 
-                className="w-full"
-                style={{
-                  width: isDesktop ? `calc((100% / ${slidesToShowCount}) - 1rem)` : 'calc(100vw - 3rem)',
-                  minWidth: isDesktop ? 'auto' : 'calc(100vw - 3rem)',
-                  flexShrink: 0
-                }}
-              >
-                <ProductCard 
-                  id={product.id}
-                  name={product.name}
-                  price={product.price}
-                  originalPrice={product.originalPrice}
-                  discount={product.discount}
-                  image={product.image}
-                  origin={product.origin}
-                  vendorName={product.vendorName}
-                />
-              </div>
+            <div 
+              className="flex gap-4 sm:gap-5 md:gap-6"
+              style={{ 
+                width: 'max-content',
+                minWidth: '100%',
+              }}
+            >
+              {products.map((product) => (
+                <div 
+                  key={product.id} 
+                  className="w-full"
+                  style={{
+                    width: isDesktop ? `calc((100% / ${slidesToShowCount}) - 1rem)` : 'calc(100vw - 3rem)',
+                    minWidth: isDesktop ? 'auto' : 'calc(100vw - 3rem)',
+                    flexShrink: 0
+                  }}
+                >
+                  <ProductCard 
+                    id={product.id}
+                    name={product.name}
+                    price={product.price}
+                    originalPrice={product.originalPrice}
+                    discount={product.discount}
+                    image={product.image}
+                    origin={product.origin}
+                    vendorName={product.vendorName}
+                    city={"بندرعباس"}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop Right Button */}
+          {showArrows && isDesktop && (
+            <button
+              className="shrink-0 bg-blue-800 text-white backdrop-blur-sm rounded-lg shadow-lg p-3 sm:p-4 md:p-6 hover:bg-blue-700 hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer"
+              aria-label="Next products"
+              onClick={() => scrollDesktop('right')}
+              style={{ opacity: canScrollRight ? 1 : 0.4, cursor: canScrollRight ? 'pointer' : 'not-allowed' }}
+              disabled={!canScrollRight}
+            >
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+            </button>
+          )}
+        </div>
+
+        {/* Mobile Dots Indicator */}
+        {showArrows && !isDesktop && maxIndex > 0 && (
+          <div className="flex justify-center gap-2 mt-6">
+            {Array.from({ length: maxIndex + 1 }).map((_, idx) => (
+              <div
+                key={idx}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  idx === currentIndex ? 'bg-blue-600 w-4' : 'bg-gray-300'
+                }`}
+              />
             ))}
           </div>
-        </div>
-
-        {/* Desktop Right Button */}
-        {showArrows && isDesktop && (
-          <button
-            className={`hidden sm:flex shrink-0 bg-blue-800 text-white backdrop-blur-sm rounded-lg shadow-lg p-3 sm:p-4 md:p-6 hover:bg-blue-700 hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer ${
-              !canScrollRight ? 'opacity-40 cursor-not-allowed hover:scale-100' : ''
-            }`}
-            aria-label="Next products"
-            onClick={() => scrollDesktop('right')}
-            disabled={!canScrollRight}
-          >
-            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
-          </button>
         )}
       </div>
-
-      {/* Mobile Dots Indicator */}
-      {showArrows && !isDesktop && maxIndex > 0 && (
-        <div className="flex sm:hidden justify-center gap-2 mt-6">
-          {Array.from({ length: maxIndex + 1 }).map((_, idx) => (
-            <div
-              key={idx}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                idx === currentIndex ? 'bg-blue-600 w-4' : 'bg-gray-300'
-              }`}
-            />
-          ))}
-        </div>
-      )}
     </section>
   );
 }

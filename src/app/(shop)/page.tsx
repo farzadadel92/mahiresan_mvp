@@ -19,24 +19,26 @@ import {
 // Hero Section Component
 const HeroSection = () => {
   return (
-    <section className="h-96 relative bg-linear-to-r from-blue-600 to-teal-500 rounded-2xl overflow-hidden">
-      <div className="absolute inset-0">
-        <Image
-          src="/images/home/hero-desktop.png"
-          alt="Background"
-          fill
-          priority
-          className="object-cover"
-        />
-      </div>
-    </section>
+    <div>
+      <section className="relative border-2 rounded-2xl overflow-hidden h-64 sm:h-86">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/home/hero-desktop.png"
+            alt="Background"
+            fill
+            priority
+          />
+        </div>
+      </section>
+      <SearchSection />
+    </div>
   );
 };
 
 // Search Section Component
 const SearchSection = () => {
   return (
-    <div className="w-[95%] sm:w-[90%] md:w-4/5 mt-[-42] mb-12 mx-auto z-0 relative">
+    <div className="w-[95%] sm:w-[90%] md:w-4/5 mt-[-42] mx-auto z-0 relative">
       <div className="bg-white rounded-xl shadow-md p-4 md:p-6">
         <h2 className="text-stone-600 text-md mb-6 md:mb-10">جستجوی پیشرفته</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[2fr_2fr_1fr] gap-4">
@@ -94,7 +96,7 @@ const BannerGridSection = () => {
 // Benefits Section Component
 const BenefitsSection = () => {
   return (
-    <section className="flex flex-col mb-12 bg-white rounded-xl p-4 md:p-6 lg:p-8 gap-8 md:gap-10">
+    <section className="flex flex-col bg-white rounded-xl p-4 md:p-6 lg:p-8 gap-8 md:gap-10">
       {/* Benefit 1 */}
       {/* <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-center">
         <div className="flex flex-col gap-6 lg:gap-10 text-center lg:text-right">
@@ -176,7 +178,7 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="flex flex-col gap-4 mb-20">
+    <section className="flex flex-col gap-4">
       <div className="flex flex-col gap-4 text-center mb-6 md:mb-8">
         <h3 className="font-bold text-xl md:text-2xl text-gray-900 mb-1">سوالات متداول</h3>
         <p className="text-blue-800 text-xs md:text-sm">پاسخ به رایج ترین پرسش‌های شما</p>
@@ -225,7 +227,7 @@ const FAQSection = () => {
 // Blog Section Component
 const BlogSection = () => {
   return (
-    <section className="mb-12">
+    <section className="">
       <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
         <h2 className="text-stone-700 text-xl md:text-2xl font-bold">آخرین مقالات</h2>
         <Link href="/essays" className="text-blue-600 hover:text-blue-700 text-sm md:text-base">
@@ -263,7 +265,7 @@ const BlogSection = () => {
 // Support Section Component
 const SupportSection = () => {
   return (
-    <section className="mb-12">
+    <section className="">
       <div className="relative overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-transform duration-300 hover:scale-[1.02]">
         <Image 
           src="/images/home/support-banner.png" 
@@ -315,17 +317,35 @@ const BackToTopButton = () => {
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white" dir="rtl">
-      <main className="container mx-auto px-3 sm:px-4 md:px-6 py-4 md:py-6 lg:py-8">
+      <main className="flex flex-col gap-30 container mx-auto px-3 sm:px-4 md:px-6 py-4 md:py-6 lg:py-8">
         <HeroSection />
-        <SearchSection />
         
-        <CardSection
-          title="تخفیفات ویژه"
-          seeAllLink="/products?discount=true"
-          products={featuredProducts}
-          showArrows={true}
-          slidesToShow={4}
-        />
+        <div className="flex gap-4 items-center container mx-auto px-4 overflow-hidden w-full">
+          {/* Image container - increased width */}
+          <div className="w-1/3 shrink-0">  {/* Changed from w-1/4 to w-1/3 */}
+            <Image
+              src="/images/home/discount.png"
+              alt="Background"
+              height={600}
+              width={600}
+              className="w-full h-full rounded-lg object-cover"
+              priority
+            />
+          </div>
+          
+          {/* CardSection container */}
+          <div className="flex-1 min-w-0 overflow-hidden h-full">
+            <div className="h-full origin-top-left">
+              <CardSection
+                title="تخفیفات ویژه"
+                seeAllLink="/products?discount=true"
+                products={featuredProducts}
+                showArrows={true}
+                slidesToShow={4}
+              />
+            </div>
+          </div>
+        </div>
 
         <CardSection
           title="محصولات تازه امروز"

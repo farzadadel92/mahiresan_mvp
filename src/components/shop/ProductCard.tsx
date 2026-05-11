@@ -24,26 +24,22 @@ const ProductCard = ({
 
   return (
     <div 
-      className="bg-white border-gray-200 border-2 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
+      className="w-64 shrink-0 bg-white border-gray-200 border-2 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Image section */}
-      <div className="relative p-3"> {/* Add padding here */}
+      <div className="relative p-3">
         <div className="relative aspect-square">
             <Image
               src={image}
               alt={name}
               fill
-              />
+              className="rounded-lg object-contain"
+            />
             {discount && (
             <div className="absolute top-4 right-4 bg-red-500 text-white px-1 py-2 rounded-lg text-sm font-bold">
                 {persianFormatPrice(discount)}%
-            </div>
-            )}
-            {origin && (
-            <div className="absolute bottom-4 left-4 bg-black/60 text-white px-2 py-1 rounded text-xs">
-                {origin}
             </div>
             )}
         </div>
@@ -51,12 +47,17 @@ const ProductCard = ({
       
       {/* description */}
       <div className="p-4">
-        <h3 className="font-semibold text-gray-800 mb-1 line-clamp-2">{name}</h3>
+        {/* Product name with ellipsis for multi-line */}
+        <h3 className="font-semibold text-gray-800 mb-1 line-clamp-2 wrap-break-words">
+          {name}
+        </h3>
         
-        {/* Vendor name display */}
+        {/* Vendor name display with ellipsis for multi-line */}
         <div className='flex gap-2 text-gray-400'>
-          <Store size={24} color="currentColor" />
-          <p className="text-sm mb-2">{city} | {vendorName}</p>
+          <Store size={24} color="currentColor" className="shrink-0" />
+          <p className="text-sm mb-2 line-clamp-2 wrap-break-words">
+            {city} | {vendorName}
+          </p>
         </div>
         
         {/* Price display */}
@@ -73,7 +74,7 @@ const ProductCard = ({
             </span>
           </div>
           
-          <button className="bg-blue-100 rounded-lg">
+          <button className="bg-blue-100 rounded-lg shrink-0">
             <BagIcon hasBackground={false} />
           </button>
         </div>

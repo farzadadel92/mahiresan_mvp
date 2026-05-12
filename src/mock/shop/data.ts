@@ -86,6 +86,33 @@ export const freshProducts: Product[] = [
     image: "/images/products/hamoor-mahi-2.jpg",
     origin: "قشم",
     vendorName: "صیادان جزیره قشم"
+  },
+  {
+    id: "17",
+    vendorId: "1",
+    name: "ماهی هامور سفید (صادراتی)",
+    price: 730000,
+    image: "/images/products/hamoor-mahi-2.jpg",
+    origin: "قشم",
+    vendorName: "صیادان جزیره قشم"
+  },
+  {
+    id: "22",
+    vendorId: "1",
+    name: "ماهی هامور سفید (صادراتی)",
+    price: 730000,
+    image: "/images/products/hamoor-mahi-2.jpg",
+    origin: "قشم",
+    vendorName: "صیادان جزیره قشم"
+  },
+  {
+    id: "21",
+    vendorId: "1",
+    name: "ماهی هامور سفید (صادراتی)",
+    price: 730000,
+    image: "/images/products/hamoor-mahi-2.jpg",
+    origin: "قشم",
+    vendorName: "صیادان جزیره قشم"
   }
 ];
 

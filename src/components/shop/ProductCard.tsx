@@ -12,69 +12,64 @@ const ProductCard = ({
   originalPrice, 
   discount, 
   image, 
-  origin, 
   vendorName,
   city 
 }: ProductCardProps) => {
-  const [isHovered, setIsHovered] = useState(false);
   
   const persianFormatPrice = (price: number) => {
     return new Intl.NumberFormat('fa-IR').format(price);
   };
 
   return (
-    <div 
-      className="w-64 shrink-0 bg-white border-gray-200 border-2 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Image section */}
-      <div className="relative p-3">
-        <div className="relative aspect-square">
+    <div className="w-52 shrink-0 bg-white border-gray-100 border-2 rounded-lg shadow-md transition-all duration-300 overflow-hidden">
+      
+      {/* Image section - REDUCED HEIGHT */}
+      <div className="relative p-2 pb-1"> 
+        <div className="relative aspect-3/3"> 
             <Image
               src={image}
               alt={name}
               fill
-              className="rounded-lg object-contain"
+              className="rounded-md object-contain"
             />
             {discount && (
-            <div className="absolute top-4 right-4 bg-red-500 text-white px-1 py-2 rounded-lg text-sm font-bold">
+            <div className="absolute top-1 right-1 bg-red-500 text-white px-1 py-0.5 rounded-md text-xs font-bold"> {/* Adjusted position and padding */}
                 {persianFormatPrice(discount)}%
             </div>
             )}
         </div>
       </div>
       
-      {/* description */}
-      <div className="p-4">
-        {/* Product name with ellipsis for multi-line */}
-        <h3 className="font-semibold text-gray-800 mb-1 line-clamp-2 wrap-break-words">
+      {/* description - REDUCED VERTICAL SPACING */}
+      <div className="p-3 pt-1"> 
+        {/* Product name */}
+        <h3 className="font-semibold text-gray-800 mb-0.5 text-sm line-clamp-2 wrap-break-words"> {/* Changed: mb-1 → mb-0.5 */}
           {name}
         </h3>
         
-        {/* Vendor name display with ellipsis for multi-line */}
-        <div className='flex gap-2 text-gray-400'>
-          <Store size={24} color="currentColor" className="shrink-0" />
-          <p className="text-sm mb-2 line-clamp-2 wrap-break-words">
+        {/* Vendor name */}
+        <div className='flex gap-1.5 text-gray-400'>
+          <Store size={16} color="currentColor" className="shrink-0" /> {/* Changed: size 18 → 16 */}
+          <p className="text-xs mb-1 line-clamp-1 wrap-break-words"> {/* Changed: mb-1.5 → mb-1, line-clamp-2 → line-clamp-1 (single line) */}
             {city} | {vendorName}
           </p>
         </div>
         
-        {/* Price display */}
-        <div className="flex items-center justify-between mt-8 p-3 border-2 bg-blue-50 rounded-xl">
+        {/* Price display - REDUCED HEIGHT */}
+        <div className="flex items-center justify-between mt-2 p-1.5 border bg-blue-50 rounded-lg"> {/* Changed: mt-4 → mt-2, p-2 → p-1.5 */}
           <div className="flex flex-col">
             {originalPrice && (
-                <span className="relative text-gray-400 text-sm inline-block">
+                <span className="relative text-gray-400 text-[11px] inline-block"> {/* Changed: text-xs → text-[11px] */}
                     {persianFormatPrice(originalPrice)} تومان
-                    <span className="absolute left-0 right-0 top-1/2 h-0.5 bg-red-500 -translate-y-1/2 translate-x-3"></span>
+                    <span className="absolute left-0 right-0 top-1/2 h-0.5 bg-red-500 -translate-y-1/2 translate-x-2"></span>
                 </span>
             )}
-            <span className="text-blue-600 font-extrabold text-xl">
+            <span className="text-blue-600 font-bold text-sm"> {/* Changed: text-base → text-sm */}
               {persianFormatPrice(price)} تومان
             </span>
           </div>
           
-          <button className="bg-blue-100 rounded-lg shrink-0">
+          <button className="bg-blue-100 rounded-md shrink-0 p-0.5"> {/* Changed: p-1 → p-0.5 */}
             <BagIcon hasBackground={false} />
           </button>
         </div>

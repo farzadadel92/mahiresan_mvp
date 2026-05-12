@@ -317,17 +317,17 @@ const BackToTopButton = () => {
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white" dir="rtl">
-      <main className="flex flex-col gap-30 container mx-auto px-3 sm:px-4 md:px-6 py-4 md:py-6 lg:py-8">
+      <main className="flex flex-col gap-30 container mx-auto py-5">
         <HeroSection />
         
         <div className="flex gap-4 items-center container mx-auto px-4 overflow-hidden w-full">
           {/* Image container - increased width */}
-          <div className="w-1/3 shrink-0">  {/* Changed from w-1/4 to w-1/3 */}
+          <div className="w-1/4 shrink-0">  {/* Changed from w-1/4 to w-1/3 */}
             <Image
               src="/images/home/discount.png"
               alt="Background"
-              height={600}
-              width={600}
+              height={400}
+              width={400}
               className="w-full h-full rounded-lg object-cover"
               priority
             />

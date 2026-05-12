@@ -1,4 +1,4 @@
-// src/components/shop/SectionWithScroll.tsx
+// src/components/shop/CardSection.tsx
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -6,6 +6,7 @@ import { motion, useAnimation, PanInfo } from 'framer-motion';
 import Link from 'next/link';
 import ProductCard from './ProductCard';
 import { CardSectionProps } from '@/src/types/ui.types';
+import { ChevronLeft } from 'lucide-react';
 
 export default function CardSection({
   title,
@@ -20,7 +21,7 @@ export default function CardSection({
   const [itemWidth, setItemWidth] = useState(0);
   const [visibleItems, setVisibleItems] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const [direction, setDirection] = useState<'left' | 'right'>('left'); // Track slide direction
+  const [direction, setDirection] = useState<'left' | 'right'>('left');
 
   // Calculate item width and visible items on resize
   useEffect(() => {
@@ -52,11 +53,9 @@ export default function CardSection({
     setIsAnimating(true);
     
     if (direction === 'left') {
-      // Sliding left - showing items from the right
       const nextIndex = currentIndex + 1;
       
       if (nextIndex >= totalSlides) {
-        // Reached the end, change direction to right
         setDirection('right');
         const prevIndex = currentIndex - 1;
         await controls.start({
@@ -72,11 +71,9 @@ export default function CardSection({
         setCurrentIndex(nextIndex);
       }
     } else {
-      // Sliding right - showing items from the left
       const prevIndex = currentIndex - 1;
       
       if (prevIndex < 0) {
-        // Reached the beginning, change direction to left
         setDirection('left');
         const nextIndex = currentIndex + 1;
         await controls.start({
@@ -119,14 +116,11 @@ export default function CardSection({
     const swipeThreshold = 50;
     if (Math.abs(info.offset.x) > swipeThreshold) {
       if (info.offset.x > 0) {
-        // Swiped right - slide right (show items from left)
         await slideToRight();
       } else {
-        // Swiped left - slide left (show items from right)
         await slideToLeft();
       }
     } else {
-      // Snap back to current position
       await controls.start({
         x: -(itemWidth * currentIndex),
         transition: { type: "tween", duration: 0.3, ease: "easeOut" }
@@ -179,64 +173,39 @@ export default function CardSection({
   };
 
   return (
-    <section className={`relative border-2 p-7 border-gray-200 rounded-xl ${className}`}>
-      {/* Half-height background layer */}
-      <div className="absolute rounded-t-xl inset-x-0 top-0 h-1/3 bg-blue-600" style={{ zIndex: 0 }}></div>
+    <section className={`relative border border-gray-200 rounded-xl py-5 px-10 ${className}`}> {/* Reduced border width, decreased padding from p-6 px-8 to p-4 */}
+      {/* Half-height background layer - made lighter */}
+      <div className="absolute rounded-t-xl inset-x-0 top-0 h-1/3 bg-sky-700 opacity-90" style={{ zIndex: 0 }}></div> {/* Changed from blue-600 to blue-500, added opacity */}
       
       {/* Content wrapper with higher z-index */}
       <div className="relative" style={{ zIndex: 1 }}>
         {/* Header */}
         {(title || seeAllLink) && (
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 p-1 mb-6">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 p-1 mb-4"> {/* Reduced gap from 4 to 3, mb-6 to mb-4 */}
             {title && (
-              <h3 className="text-white text-2xl sm:text-2xl md:text-2xl font-bold text-center sm:text-right">
+              <h3 className="text-white text-xl font-semibold text-center sm:text-right"> {/* Reduced from text-2xl to text-xl, font-bold to font-semibold */}
                 {title}
               </h3>
             )}
             {seeAllLink && (
               <Link 
                 href={seeAllLink} 
-                className="text-white text-base font-bold sm:text-lg md:text-lg hover:text-gray-200 transition-colors"
+                className="flex items-center gap-1 text-white text-base font-medium hover:text-gray-200 transition-colors" // Reduced gap, text size, and font weight
               >
-                مشاهده همه
+                مشاهده همه <ChevronLeft size={18} /> {/* Added size prop to icon */}
               </Link>
             )}
           </div>
         )}
 
         {/* Products Container */}
-        <div className="relative mt-8 sm:mt-10 md:mt-12">
-          {/* Navigation Buttons */}
-          {products.length > visibleItems && (
-            <>
-              <button
-                onClick={slideToRight}
-                disabled={isAnimating}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all disabled:opacity-50"
-                style={{ transform: 'translateY(-50%)' }}
-              >
-                <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button
-                onClick={slideToLeft}
-                disabled={isAnimating}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all disabled:opacity-50"
-                style={{ transform: 'translateY(-50%)' }}
-              >
-                <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </>
-          )}
+        <div className="relative mt-4"> {/* Reduced from mt-8 to mt-4 */}
 
           {/* Horizontal Scroll Container - Hidden Scrollbar */}
           <div className="w-full overflow-hidden">
             <motion.div
               ref={containerRef}
-              className="flex gap-4 cursor-grab active:cursor-grabbing"
+              className="flex gap-4 cursor-grab active:cursor-grabbing" // Reduced gap from 6 to 4
               animate={controls}
               initial={{ x: 0 }}
               drag="x"
@@ -249,7 +218,7 @@ export default function CardSection({
               {products.map((product, idx) => (
                 <div 
                   key={product.id} 
-                  className="card-item w-64 sm:w-72 shrink-0"
+                  className="card-item w-56 shrink-0" // Reduced from w-64 to w-56 (makes cards narrower)
                 >
                   <ProductCard 
                     id={product.id}
@@ -269,7 +238,7 @@ export default function CardSection({
 
           {/* Dots Indicator */}
           {products.length > visibleItems && totalSlides > 1 && (
-            <div className="flex justify-center gap-2 mt-6">
+            <div className="flex justify-center gap-2 mt-4"> {/* Reduced from mt-6 to mt-4 */}
               {Array.from({ length: totalSlides }).map((_, idx) => (
                 <button
                   key={idx}
@@ -282,8 +251,8 @@ export default function CardSection({
                       setCurrentIndex(idx);
                     }
                   }}
-                  className={`h-2 rounded-full transition-all ${
-                    idx === currentIndex ? 'w-8 bg-blue-600' : 'w-2 bg-gray-300'
+                  className={`h-1.5 rounded-full transition-all ${ // Reduced from h-2 to h-1.5
+                    idx === currentIndex ? 'w-6 bg-blue-500' : 'w-1.5 bg-gray-300' // Adjusted widths and color
                   }`}
                 />
               ))}

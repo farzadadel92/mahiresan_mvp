@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { ThemeProvider } from "@/src/contexts/ThemeContext"; // <-- import
 
 const geistSans = localFont({
   src: "../../public/fonts/Vazirmatn-Regular.woff2",
@@ -26,10 +27,16 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="fa" // Persian
+      dir="rtl"
+      suppressHydrationWarning // Prevent hydration issues
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

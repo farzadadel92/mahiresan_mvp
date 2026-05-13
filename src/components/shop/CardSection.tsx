@@ -215,7 +215,7 @@ export default function CardSection({
               onDragEnd={handleDragEnd}
               dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
             >
-              {products.map((product, idx) => (
+              {products.map((product) => (
                 <div 
                   key={product.id} 
                   className="card-item w-56 shrink-0" // Reduced from w-64 to w-56 (makes cards narrower)

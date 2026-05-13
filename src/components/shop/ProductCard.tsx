@@ -1,5 +1,4 @@
 // ProductCard.tsx
-import { useState } from 'react';
 import Image from 'next/image';
 import BagIcon from "@/public/icons/BagIcon";
 import { Store } from 'lucide-react';
@@ -56,7 +55,7 @@ const ProductCard = ({
         </div>
         
         {/* Price display - REDUCED HEIGHT */}
-        <div className="flex items-center justify-between mt-2 p-1.5 border bg-primary-light rounded-lg"> {/* Changed: mt-4 → mt-2, p-2 → p-1.5 */}
+        <div className="flex items-center justify-between mt-2 p-1.5 border border-border bg-primary-light rounded-lg"> {/* Changed: mt-4 → mt-2, p-2 → p-1.5 */}
           <div className="flex flex-col">
             {originalPrice && (
                 <span className="relative text-text-muted text-[11px] inline-block"> {/* Changed: text-xs → text-[11px] */}

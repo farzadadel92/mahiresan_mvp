@@ -1,8 +1,12 @@
 // src/components/layout/Header.tsx
+'use client'
+
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Search, Menu, X, User, ShoppingBag, ChevronLeft } from "lucide-react";
 import Image from 'next/image';
+
+import ThemeToggle from '../ui/ThemeToggle';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -101,6 +105,8 @@ const Header = () => {
 
           {/* Right Section - Actions */}
           <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+            <ThemeToggle />
+
             {/* Search Button - Mobile */}
             <button className="lg:hidden p-2 text-text-secondary hover:text-primary transition-colors">
               <Search className="w-5 h-5 sm:w-6 sm:h-6" />

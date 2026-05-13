@@ -1,6 +1,70 @@
 /* src/app/globals.css */
 @import "tailwindcss";
 
+/* ========== Tailwind CSS v4 Theme Configuration ========== */
+@theme {
+  /* Colors */
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-primary-light: #dbeafe;
+  --color-primary-dark: #1e3a8a;
+  
+  --color-secondary: #0369a1;
+  --color-secondary-light: #e0f2fe;
+  
+  --color-background-alt: #f9fafb;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f3f4f6;
+  --color-footer-bg: #111827;
+  
+  --color-text-primary: #111827;
+  --color-text-secondary: #4b5563;
+  --color-text-muted: #9ca3af;
+  --color-text-inverse: #ffffff;
+  
+  --color-border: #e5e7eb;
+  --color-border-hover: #d1d5db;
+  
+  --color-accent: #ef4444;
+  --color-accent-light: #fee2e2;
+  
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  
+  /* Typography */
+  --font-sans: "Vazirmatn", system-ui, -apple-system, sans-serif;
+  
+  /* Border Radii */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  
+  /* Spacing */
+  --spacing-18: 4.5rem;
+  
+  /* Animations */
+  --animate-fade-in: fadeIn 0.5s ease-in-out;
+  --animate-slide-up: slideUp 0.3s ease-out;
+  
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    0% { transform: translateY(20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+}
+
 /* Persian Font Configuration */
 @font-face {
   font-family: 'Vazirmatn';
@@ -18,22 +82,85 @@
   font-display: swap;
 }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
+    /* CSS Custom Properties for runtime theming */
+    /* Primary - Main brand color (blue) */
+    --color-primary: #2563eb;
+    --color-primary-hover: #1d4ed8;
+    --color-primary-light: #dbeafe;
+    --color-primary-dark: #1e3a8a;
+
+    /* Secondary - Used in CardSection overlay and accents */
+    --color-secondary: #0369a1;
+    --color-secondary-light: #e0f2fe;
+
+    /* Backgrounds */
+    --background: #ffffff;
+    --color-background-alt: #f9fafb;
+
+    /* Surfaces (cards, panels) */
+    --color-surface: #ffffff;
+    --color-surface-hover: #f3f4f6;
+
+    /* Footer */
+    --color-footer-bg: #111827;
+
+    /* Text colors */
+    --foreground: #171717;
+    --color-text-primary: #111827;
+    --color-text-secondary: #4b5563;
+    --color-text-muted: #9ca3af;
+    --color-text-inverse: #ffffff;
+
+    /* Borders */
+    --color-border: #e5e7eb;
+    --color-border-hover: #d1d5db;
+
+    /* Accent */
+    --color-accent: #ef4444;
+    --color-accent-light: #fee2e2;
+
+    /* Semantic colors */
+    --color-success: #22c55e;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
+
+    /* Border Radii */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  }
+
+  /* Dark mode - uses data attribute for manual toggle */
+  [data-theme="dark"] {
     --background: #0a0a0a;
     --foreground: #ededed;
+    
+    --color-background-alt: #1e293b;
+    --color-surface: #1e293b;
+    --color-surface-hover: #334155;
+    --color-footer-bg: #020617;
+    --color-text-primary: #f1f5f9;
+    --color-text-secondary: #cbd5e1;
+    --color-text-muted: #94a3b8;
+    --color-border: #334155;
+    --color-border-hover: #475569;
+    --color-primary-light: #1e3a5f;
   }
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
 }
 
 /* RTL Support */

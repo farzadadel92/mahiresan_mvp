@@ -173,9 +173,9 @@ export default function CardSection({
   };
 
   return (
-    <section className={`relative border border-gray-200 rounded-xl py-5 px-10 ${className}`}> {/* Reduced border width, decreased padding from p-6 px-8 to p-4 */}
+    <section className={`relative border border-border rounded-xl py-5 px-10 ${className}`}> {/* Reduced border width, decreased padding from p-6 px-8 to p-4 */}
       {/* Half-height background layer - made lighter */}
-      <div className="absolute rounded-t-xl inset-x-0 top-0 h-1/3 bg-sky-700 opacity-90" style={{ zIndex: 0 }}></div> {/* Changed from blue-600 to blue-500, added opacity */}
+      <div className="absolute rounded-t-xl inset-x-0 top-0 h-1/3 bg-secondary opacity-90" style={{ zIndex: 0 }}></div> {/* Changed from blue-600 to blue-500, added opacity */}
       
       {/* Content wrapper with higher z-index */}
       <div className="relative" style={{ zIndex: 1 }}>
@@ -183,14 +183,14 @@ export default function CardSection({
         {(title || seeAllLink) && (
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3 p-1 mb-4"> {/* Reduced gap from 4 to 3, mb-6 to mb-4 */}
             {title && (
-              <h3 className="text-white text-xl font-semibold text-center sm:text-right"> {/* Reduced from text-2xl to text-xl, font-bold to font-semibold */}
+              <h3 className="text-text-inverse text-xl font-semibold text-center sm:text-right"> {/* Reduced from text-2xl to text-xl, font-bold to font-semibold */}
                 {title}
               </h3>
             )}
             {seeAllLink && (
               <Link 
                 href={seeAllLink} 
-                className="flex items-center gap-1 text-white text-base font-medium hover:text-gray-200 transition-colors" // Reduced gap, text size, and font weight
+                className="flex items-center gap-1 text-text-inverse text-base font-medium hover:text-gray-200 transition-colors" // Reduced gap, text size, and font weight
               >
                 مشاهده همه <ChevronLeft size={18} /> {/* Added size prop to icon */}
               </Link>
@@ -252,7 +252,7 @@ export default function CardSection({
                     }
                   }}
                   className={`h-1.5 rounded-full transition-all ${ // Reduced from h-2 to h-1.5
-                    idx === currentIndex ? 'w-6 bg-blue-500' : 'w-1.5 bg-gray-300' // Adjusted widths and color
+                    idx === currentIndex ? 'w-6 bg-primary' : 'w-1.5 bg-gray-300' // Adjusted widths and color
                   }`}
                 />
               ))}

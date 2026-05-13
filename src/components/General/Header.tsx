@@ -47,17 +47,17 @@ const Header = () => {
   ];
 
   return (
-    <header className={`bg-white transition-shadow duration-300 ${isScrolled ? 'shadow-md' : 'shadow-sm'}`}>
+    <header className={`bg-surface transition-shadow duration-300 ${isScrolled ? 'shadow-md' : 'shadow-sm'}`}>
       {/* Top Bar - Responsive */}
       <div 
-        className="flex items-center justify-center h-10 sm:h-12 bg-blue-100 bg-cover bg-center px-3 sm:px-4"
+        className="flex items-center justify-center h-10 sm:h-12 bg-primary-light bg-cover bg-center px-3 sm:px-4"
         style={{ backgroundImage: "url('/images/header/top-bar-background.png')" }}
       >
-        <p className="flex text-black gap-2 sm:gap-3 text-xs sm:text-sm md:text-base items-center">
+        <p className="flex text-text-primary gap-2 sm:gap-3 text-xs sm:text-sm md:text-base items-center">
           <span className="font-bold">تخفیف ویژه</span> 
           <span className="">برای اولین خرید از سایت ماهی‌رسان!</span>
           <Link 
-            className="bg-white rounded-full hover:scale-105 text-gray-400 justify-center items-center inline-flex p-0.5 sm:p-1"
+            className="bg-surface rounded-full hover:scale-105 text-text-muted justify-center items-center inline-flex p-0.5 sm:p-1"
             href={"/"}
           >
             <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -89,7 +89,7 @@ const Header = () => {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="inline-flex items-center text-gray-700 hover:text-blue-600 font-medium text-sm xl:text-base transition-colors border-b-2 border-transparent hover:border-blue-600 py-2"
+                      className="inline-flex items-center text-text-secondary hover:text-primary font-medium text-sm xl:text-base transition-colors border-b-2 border-transparent hover:border-primary py-2"
                     >
                       {link.name}
                     </Link>
@@ -102,18 +102,18 @@ const Header = () => {
           {/* Right Section - Actions */}
           <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
             {/* Search Button - Mobile */}
-            <button className="lg:hidden p-2 text-gray-600 hover:text-blue-600 transition-colors">
+            <button className="lg:hidden p-2 text-text-secondary hover:text-primary transition-colors">
               <Search className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
 
             {/* Cart - Hidden on mobile, visible on tablet and up */}
             <Link
               href="/cart"
-              className="hidden sm:flex relative p-2 text-gray-600 hover:text-blue-600 transition-colors"
+              className="hidden sm:flex relative p-2 text-text-secondary hover:text-primary transition-colors"
             >
               <div className="relative">
                 <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-accent text-text-inverse text-xs rounded-full w-4 h-4 flex items-center justify-center">
                   0
                 </span>
               </div>
@@ -122,7 +122,7 @@ const Header = () => {
             {/* User Login - Hidden on mobile */}
             <Link
               href="/login"
-              className="hidden md:flex items-center gap-2 px-3 py-2 md:px-4 md:py-2.5 lg:px-5 lg:py-3 text-white bg-blue-800 rounded-lg font-normal text-sm md:text-base transition-all hover:bg-blue-700 hover:scale-105"
+              className="hidden md:flex items-center gap-2 px-3 py-2 md:px-4 md:py-2.5 lg:px-5 lg:py-3 text-text-inverse bg-primary-dark rounded-lg font-normal text-sm md:text-base transition-all hover:bg-primary-hover hover:scale-105"
             >
               <User className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" fill="white" stroke="white" />
               <span className="hidden sm:inline">ورود / ثبت نام</span>
@@ -131,7 +131,7 @@ const Header = () => {
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="lg:hidden p-2 rounded-lg hover:bg-surface-hover transition-colors"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
@@ -148,16 +148,16 @@ const Header = () => {
             style={{ top: 'calc(64px + 40px)' }}
             onClick={() => setIsMobileMenuOpen(false)}
           />
-          <div className="lg:hidden fixed right-0 bottom-0 w-full max-w-sm bg-white shadow-xl z-40 overflow-y-auto animate-slideInRight" style={{ top: 'calc(64px + 40px)' }}>
+          <div className="lg:hidden fixed right-0 bottom-0 w-full max-w-sm bg-surface shadow-xl z-40 overflow-y-auto animate-slideInRight" style={{ top: 'calc(64px + 40px)' }}>
             <div className="p-4 sm:p-5 md:p-6">
               {/* Search Input */}
               <div className="relative mb-6">
                 <input
                   type="text"
                   placeholder="جستجو در محصولات..."
-                  className="w-full px-4 py-3 pr-10 border border-gray-200 rounded-xl bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  className="w-full px-4 py-3 pr-10 border border-border rounded-xl bg-background-alt focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
                 />
-                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-text-muted w-4 h-4" />
               </div>
 
               {/* Navigation Links */}
@@ -166,7 +166,7 @@ const Header = () => {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                      className="flex items-center gap-3 px-4 py-3 text-text-secondary hover:text-primary hover:bg-primary-light rounded-lg transition-colors"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       <span className="text-xl">{link.icon}</span>
@@ -180,7 +180,7 @@ const Header = () => {
               <div className="space-y-3">
                 <Link
                   href="/login"
-                  className="flex items-center justify-center gap-2 w-full py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors text-sm sm:text-base"
+                  className="flex items-center justify-center gap-2 w-full py-3 bg-primary text-text-inverse rounded-xl font-medium hover:bg-primary-hover transition-colors text-sm sm:text-base"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <User className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -188,12 +188,12 @@ const Header = () => {
                 </Link>
                 <Link
                   href="/cart"
-                  className="flex items-center justify-center gap-2 w-full py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-colors text-sm sm:text-base"
+                  className="flex items-center justify-center gap-2 w-full py-3 border border-border text-text-secondary rounded-xl font-medium hover:bg-surface-hover transition-colors text-sm sm:text-base"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
                   مشاهده سبد خرید
-                  <span className="mr-auto bg-red-500 text-white text-xs rounded-full px-2 py-0.5">
+                  <span className="mr-auto bg-accent text-text-inverse text-xs rounded-full px-2 py-0.5">
                     0
                   </span>
                 </Link>

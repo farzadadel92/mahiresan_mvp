@@ -155,6 +155,123 @@
     --color-border-hover: #475569;
     --color-primary-light: #1e3a5f;
   }
+
+  /* ===== Seasonal Themes (Visual overhaul) ===== */
+
+  /* Spring - Fresh green, light mint background */
+  [data-theme="spring"] {
+    /* Primary accents */
+    --color-primary: #10b981;
+    --color-primary-hover: #059669;
+    --color-primary-light: #d1fae5;
+    --color-primary-dark: #047857;
+
+    /* Secondary - Used in CardSection overlay and accents */
+    --color-secondary: #03a140;
+    --color-secondary-light: #e0f2fe;
+
+    /* Backgrounds */
+    --background: #ecfdf5;
+    --color-background-alt: #d1fae5;
+
+    /* Surfaces */
+    --color-surface: #ffffff;
+    --color-surface-hover: #f3f4f6;
+
+    /* Text colors */
+    --foreground: #064e3b;
+    --color-text-primary: #064e3b;
+    --color-text-secondary: #047857;
+    --color-text-muted: #6ee7b7;
+
+    /* Borders */
+    --color-border: #a7f3d0;
+    --color-border-hover: #6ee7b7;
+
+    /* Footer remains slightly darker but adapts */
+    --color-footer-bg: #022c22;
+  }
+
+  /* Summer - Warm yellow, sunny background */
+  [data-theme="summer"] {
+    --color-primary: #eab308;
+    --color-primary-hover: #ca8a04;
+    --color-primary-light: #fef9c3;
+    --color-primary-dark: #a16207;
+
+    --color-secondary: #ffd901;
+    --color-secondary-light: #e0f2fe;
+
+    --background: #fefce8;
+    --color-background-alt: #fef08a;
+
+    --color-surface: #ffffff;
+    --color-surface-hover: #fef9c3;
+
+    --foreground: #713f12;
+    --color-text-primary: #713f12;
+    --color-text-secondary: #854d0e;
+    --color-text-muted: #fde047;
+
+    --color-border: #fde047;
+    --color-border-hover: #facc15;
+
+    --color-footer-bg: #422006;
+  }
+
+  /* Autumn - Warm orange/rust, earthy tones */
+  [data-theme="autumn"] {
+    --color-primary: #f97316;
+    --color-primary-hover: #ea580c;
+    --color-primary-light: #ffedd5;
+    --color-primary-dark: #c2410c;
+
+    --color-secondary: #a14f03;
+    --color-secondary-light: #e0f2fe;
+
+    --background: #fff7ed;
+    --color-background-alt: #ffedd5;
+
+    --color-surface: #ffffff;
+    --color-surface-hover: #fed7aa;
+
+    --foreground: #7c2d12;
+    --color-text-primary: #7c2d12;
+    --color-text-secondary: #9a3412;
+    --color-text-muted: #fdba74;
+
+    --color-border: #fed7aa;
+    --color-border-hover: #fdba74;
+
+    --color-footer-bg: #431407;
+  }
+
+  /* Winter - Cool icy blue, frosty background */
+  [data-theme="winter"] {
+    --color-primary: #0ea5e9;
+    --color-primary-hover: #0284c7;
+    --color-primary-light: #e0f2fe;
+    --color-primary-dark: #0369a1;
+
+    --color-secondary: #0396a1;
+    --color-secondary-light: #e0f2fe;
+
+    --background: #f0f9ff;
+    --color-background-alt: #e0f2fe;
+
+    --color-surface: #ffffff;
+    --color-surface-hover: #bae6fd;
+
+    --foreground: #0c4a6e;
+    --color-text-primary: #0c4a6e;
+    --color-text-secondary: #0284c7;
+    --color-text-muted: #7dd3fc;
+
+    --color-border: #bae6fd;
+    --color-border-hover: #7dd3fc;
+
+    --color-footer-bg: #082f49;
+  }
 }
 
 body {

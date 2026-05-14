@@ -1,127 +1,65 @@
-// src/app/(shop)/page.tsx
+// src/app/(shop)/page.tsx (main page)
 'use client';
 
-import { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { 
-  Search, 
-  ChevronLeft, 
-  Star, 
-  Truck, 
-  Package, 
-  Droplet,
-  Headphones,
+  ChevronDown,
   ArrowUp
 } from 'lucide-react';
+import CardSection from '@/src/components/shop/CardSection';
+import { 
+  featuredProducts, 
+  freshProducts, 
+  bestSellingProducts, 
+  blogPosts,
+} from '../../mock/shop/data';
 
 // Hero Section Component
 const HeroSection = () => {
   return (
-    <section className="h-96 relative bg-gradient-to-r from-blue-600 to-teal-500 rounded-2xl overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <Image
-          src="/images/hero/hero-bg-desktop.png"
-          alt="Background"
-          fill
-          className="object-cover"
-          priority
-        />
-      </div>
-    </section>
-  );
-};
-
-// Category Card Component
-interface CategoryCardProps {
-  title: string;
-  description: string;
-  image: string;
-  href: string;
-}
-
-const CategoryCard = ({ title, description, image, href }: CategoryCardProps) => {
-  return (
-    <Link href={href} className="block group">
-      <div className="relative overflow-hidden rounded-xl bg-white shadow-md hover:shadow-xl transition-shadow">
-        <div className="aspect-[4/3] relative">
+    <div>
+      <section className="relative border-2 rounded-2xl overflow-hidden h-64 sm:h-86">
+        <div className="absolute inset-0">
           <Image
-            src={image}
-            alt={title}
+            src="/images/home/hero-desktop.png"
+            alt="Background"
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            priority
           />
         </div>
-        <div className="p-4">
-          <h3 className="font-bold text-lg mb-1">{title}</h3>
-          <p className="text-gray-600 text-sm">{description}</p>
-        </div>
-      </div>
-    </Link>
+      </section>
+      <SearchSection />
+    </div>
   );
 };
 
-// Product Card Component
-interface ProductCardProps {
-  id: string;
-  name: string;
-  price: number;
-  originalPrice?: number;
-  discount?: number;
-  image: string;
-  origin?: string;
-}
-
-const ProductCard = ({ id, name, price, originalPrice, discount, image, origin }: ProductCardProps) => {
-  const [isHovered, setIsHovered] = useState(false);
-  
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('fa-IR').format(price);
-  };
-
+// Search Section Component
+const SearchSection = () => {
   return (
-    <div 
-      className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className="relative aspect-square">
-        <Image
-          src={image}
-          alt={name}
-          fill
-          className="object-cover"
-        />
-        {discount && (
-          <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-lg text-sm font-bold">
-            {discount}%
+    <div className="w-[95%] sm:w-[90%] md:w-4/5 mt-[-42] mx-auto z-0 relative">
+      <div className="bg-surface rounded-xl shadow-md p-4 md:p-6">
+        <h2 className="text-text-secondary text-md mb-6 md:mb-10">جستجوی پیشرفته</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[2fr_2fr_1fr] gap-4">
+          <div className="relative text-text-secondary">
+            <select className="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary text-sm md:text-base">
+              <option value="">استان مبدا صید</option>
+              <option value="bushehr">بوشهر</option>
+              <option value="bandar-abbas">بندرعباس</option>
+              <option value="gilan">گیلان</option>
+            </select>
           </div>
-        )}
-        {origin && (
-          <div className="absolute bottom-2 left-2 bg-black/60 text-white px-2 py-1 rounded text-xs">
-            {origin}
+          <div className="relative text-text-secondary">
+            <select className="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary text-sm md:text-base">
+              <option value="">نوع محصول</option>
+              <option value="fish">ماهی</option>
+              <option value="supplements">محصولات مکمل</option>
+              <option value="shrimp">میگو</option>
+            </select>
           </div>
-        )}
-      </div>
-      
-      <div className="p-4">
-        <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2">{name}</h3>
-        
-        <div className="flex items-baseline justify-between mt-2">
-          <div className="flex flex-col">
-            {originalPrice && (
-              <span className="text-gray-400 line-through text-sm">
-                {formatPrice(originalPrice)} تومان
-              </span>
-            )}
-            <span className="text-blue-600 font-bold text-lg">
-              {formatPrice(price)} تومان
-            </span>
-          </div>
-          
-          <button className="bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-            خرید
+          <button className="bg-primary-dark text-text-inverse rounded-lg hover:bg-primary-hover transition-colors py-2 px-4 text-sm md:text-base sm:col-span-2 md:col-span-1">
+            جستجو
           </button>
         </div>
       </div>
@@ -129,332 +67,311 @@ const ProductCard = ({ id, name, price, originalPrice, discount, image, origin }
   );
 };
 
-// Feature Card Component
-interface FeatureCardProps {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}
+// Banner Grid Section Component
+const BannerGridSection = () => {
+  const banners = [
+    { src: "/images/home/banner-1.jpg", alt: "Banner 1" },
+    { src: "/images/home/banner-2.jpg", alt: "Banner 2" },
+    { src: "/images/home/banner-3.jpg", alt: "Banner 3" },
+    { src: "/images/home/banner-4.jpg", alt: "Banner 4" }
+  ];
 
-const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
   return (
-    <div className="text-center p-6">
-      <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4 text-blue-600">
-        {icon}
-      </div>
-      <h3 className="font-bold text-gray-800 mb-2">{title}</h3>
-      <p className="text-gray-600 text-sm">{description}</p>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+      {banners.map((banner, index) => (
+        <div key={index} className="relative overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow aspect-video sm:aspect-auto">
+          <Image 
+            src={banner.src}
+            alt={banner.alt}
+            width={600}
+            height={400}
+            className="object-cover hover:scale-105 transition-transform duration-300 w-full h-full"
+          />
+        </div>
+      ))}
     </div>
   );
 };
 
-// Main Home Page Component
-export default function HomePage() {
-  // Sample data - replace with API calls later
-  const categories = [
+// Benefits Section Component
+const BenefitsSection = () => {
+  return (
+    <section className="flex flex-col bg-surface rounded-xl p-4 md:p-6 lg:p-8 gap-8 md:gap-10">
+      {/* Benefit 1 */}
+      {/* <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-center">
+        <div className="flex flex-col gap-6 lg:gap-10 text-center lg:text-right">
+          <h1 className="text-text-primary font-bold text-2xl md:text-3xl lg:text-4xl">
+            تأمین گسترده از سواحل شمال تا جنوب ایران
+          </h1>
+          <p className="text-text-secondary text-justify text-base md:text-lg lg:text-xl">
+            از دریای خزر تا خلیج فارس و دریای عمان؛ ماهی‌رسان با شبکه‌ای گسترده از تأمین‌کنندگان محلی، محصولات تازه دریایی را مستقیماً از استان‌های ساحلی کشور تهیه کرده و با بسته‌بندی حرفه‌ای، به سراسر ایران ارسال می‌کند
+          </p>
+        </div>
+      </div> */}
+
+      {/* Benefit 2 */}
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-center">
+        <div className="flex flex-col gap-6 lg:gap-10 text-center lg:text-right order-2 lg:order-1">
+          <h1 className="text-text-primary font-bold text-2xl md:text-3xl lg:text-4xl">
+            پـیک درون‌شـهــری بــرای مـشــتــریـان سـواحــل ایـران
+          </h1>
+          <p className="text-text-secondary text-justify text-base md:text-lg lg:text-xl">
+            مشتریان عزیز ساکن شهرهای ساحلی می‌توانند محصولات دریایی خود را در سریع‌ترین زمان ممکن، از طریق پیک درون‌شهری دریافت کنند.
+          </p>
+          <div className="w-full max-w-2xl mx-auto lg:mx-0">
+            <Image 
+              src="/images/home/take-away-cities.png" 
+              alt="take away cities"
+              width={900}
+              height={1000}
+              className="object-cover w-full h-auto"
+            />
+          </div>
+        </div>
+        <div className="order-1 lg:order-2 w-full lg:w-auto">
+          <Image 
+            src="/images/home/take-away.png" 
+            alt="take away"
+            width={900}
+            height={1000}
+            className="object-cover hover:scale-105 transition-transform duration-300 w-full h-auto"
+          />
+        </div>
+      </div>
+      
+      {/* Benefit 3 */}
+      <div className="mx-auto w-full">
+        <Image 
+          src="/images/home/our-job.png" 
+          alt="our job"
+          width={1500}
+          height={600}
+          className="object-cover w-full h-auto"
+        />
+      </div>
+    </section>
+  );
+};
+
+// FAQ Section Component
+const FAQSection = () => {
+  const [openIndex, setOpenIndex] = React.useState<number | null>(null);
+
+  // FAQ items data
+  const faqItems = [
     {
-      title: "ماهی تازه، آماده برای پخت",
-      description: "از ماهی سفید شمالی تا سنگسر جنوبی",
-      image: "/images/categories/fresh-fish.jpg",
-      href: "/products?category=fish"
+      question: "آیا امکان ارسال به تمام نقاط ایران وجود دارد؟",
+      answer: "بله، ما به تمام نقاط ایران ارسال داریم."
     },
     {
-      title: "خاویار درج یک، با استاندارد صادرات",
-      description: "کیفیت ممتاز، بسته‌بندی استاندارد",
-      image: "/images/categories/caviar.jpg",
-      href: "/products?category=caviar"
+      question: "چگونه مطمئن شویم محصول تازه است؟",
+      answer: "تمام محصولات ما مستقیماً از دریا صید و در سریعترین زمان ممکن ارسال می‌شوند."
     },
     {
-      title: "مواد اولیه و محصولات مکمل دریایی",
-      description: "انتخابی کامل برای آشپزی روزمره",
-      image: "/images/categories/supplements.jpg",
-      href: "/products?category=supplements"
+      question: "آیا محصولات منجمد شده نیز وجود دارد؟",
+      answer: "بله، ما هم محصولات تازه و هم محصولات منجمد با کیفیت را عرضه می‌کنیم."
     },
     {
-      title: "میگو تازه جنوب، مستقیم از دریا",
-      description: "میگو درشت صید خلیج فارس و دریای عمان",
-      image: "/images/categories/shrimp.jpg",
-      href: "/products?category=shrimp"
-    }
+      question: "آیا امکان خرید فیله‌شده وجود دارد؟",
+      answer: "بله، می‌توانید در سفارش خود درخواست فیله کردن ماهی را ثبت کنید."
+    },
   ];
 
-  const featuredProducts = [
-    {
-      id: "1",
-      name: "ماهی هامور سفید (صادراتی)",
-      price: 730000,
-      originalPrice: 855000,
-      discount: 14,
-      image: "/images/products/hamoor-mahi.jpg",
-      origin: "خلیج فارس"
-    },
-    {
-      id: "2",
-      name: "ماهی هامور سفید (صادراتی)",
-      price: 730000,
-      originalPrice: 855000,
-      discount: 14,
-      image: "/images/products/hamoor-mahi-2.jpg",
-      origin: "دریای عمان"
-    }
-  ];
+  return (
+    <section className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 text-center mb-6 md:mb-8">
+        <h3 className="font-bold text-xl md:text-2xl text-text-primary mb-1">سوالات متداول</h3>
+        <p className="text-primary-dark text-xs md:text-sm">پاسخ به رایج ترین پرسش‌های شما</p>
+      </div>
 
-  const freshProducts = [
-    {
-      id: "3",
-      name: "ماهی هامور سفید (صادراتی)",
-      price: 730000,
-      image: "/images/products/hamoor-mahi-3.jpg",
-      origin: "بندرعباس"
-    },
-    {
-      id: "4",
-      name: "ماهی هامور سفید (صادراتی)",
-      price: 730000,
-      image: "/images/products/hamoor-mahi-4.jpg",
-      origin: "قشم"
-    }
-  ];
+      <div className="space-y-3 md:space-y-4 px-2 md:px-0">
+        {faqItems.map((item, index) => (
+          <div key={index} className="w-full max-w-5xl mx-auto">
+            <button
+              className={`flex justify-between rounded-xl bg-surface-hover border-2 items-center w-full text-right p-4 md:p-5 transition-all duration-300 ${
+                openIndex === index 
+                  ? 'border-primary bg-primary-light' 
+                  : 'border-border hover:bg-surface-hover'
+              }`}
+              onClick={() => setOpenIndex(openIndex === index ? null : index)}
+            >
+              <span className={`font-semibold text-sm md:text-base transition-colors duration-300 ${
+                openIndex === index ? 'text-primary' : 'text-text-primary'
+              }`}>
+                {item.question}
+              </span>
+              <span className={`text-text-muted text-xl font-medium ml-3 transition-all duration-300 ${
+                openIndex === index ? 'rotate-180 text-primary' : ''
+              }`}>
+                <ChevronDown />
+              </span>
+            </button>
+            
+            {/* Expandable Answer Section with Animation */}
+            <div
+              className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                openIndex === index ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0'
+              }`}
+            >
+              <div className="p-4 md:p-5 bg-background-alt rounded-xl text-text-secondary text-sm md:text-base border-r-4 border-primary">
+                {item.answer || 'پاسخ این سوال به زودی اضافه خواهد شد'}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
 
-  const features = [
-    {
-      icon: <Truck className="w-8 h-8" />,
-      title: "ارسال سراسری به کشور",
-      description: "تحویل به موقع و سریع"
-    },
-    {
-      icon: <Package className="w-8 h-8" />,
-      title: "بسته‌بندی بهداشتی",
-      description: "حفظ و ماندگاری محصول تازه"
-    },
-    {
-      icon: <Droplet className="w-8 h-8" />,
-      title: "صید تازه، هر روز",
-      description: "تأمین مستقیم از سه دریا"
-    },
-    {
-      icon: <Headphones className="w-8 h-8" />,
-      title: "پشتیبانی همیشگی",
-      description: "پاسخ‌گوی سوالات شما"
-    }
-  ];
+// Blog Section Component
+const BlogSection = () => {
+  return (
+    <section className="">
+      <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
+        <h2 className="text-text-primary text-xl md:text-2xl font-bold">آخرین مقالات</h2>
+        <Link href="/essays" className="text-primary hover:text-primary-hover text-sm md:text-base">
+          مشاهده همه
+        </Link>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {blogPosts.map((post) => (
+          <div key={post.id} className="bg-surface rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            <div className="aspect-video relative bg-surface-hover">
+              <Image
+                src={post.image || "/images/blog/blog-image.png"}
+                alt={post.title}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="flex flex-col gap-3 md:gap-4 p-4">
+              <div className="text-text-muted text-xs md:text-sm">{post.date}</div>
+              <h3 className="text-text-primary text-lg md:text-xl font-bold line-clamp-2">{post.title}</h3>
+              <p className="text-text-muted text-sm md:text-base line-clamp-3">
+                {"امگا-۳، اسید چرب ضروری برای سلامتی قلب و مغز، یکی از مواد مغذی کلیدی است که بدن ما نمی‌تواند آن را تولید کند. ماهی‌های تازه، به‌ویژه از جنوب ایران، سرشار از این ماده هستند. اما آیا مکمل‌های امگا-۳ می‌توانند جایگزین ماهی شوند؟ در این مقاله، فواید امگا-۳ را بررسی کرده و آن را در ماهی و مکمل‌ها مقایسه می‌کنیم تا بهترین گزینه را برای شما پیدا کنیم"}
+              </p>
+              <Link href={`/essays/${post.slug}`} className="text-primary text-sm md:text-base hover:text-primary-hover transition-colors">
+                ادامه مطلب →
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
 
-  const cities = [
-    "چابهار", "گرگان", "بندرانزلی", "بندرعباس", 
-    "رشت", "بوشهر", "قشم", "اهواز"
-  ];
+// Support Section Component
+const SupportSection = () => {
+  return (
+    <section className="">
+      <div className="relative overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-transform duration-300 hover:scale-[1.02]">
+        <Image 
+          src="/images/home/support-banner.png" 
+          alt="Support Banner"
+          width={1300}
+          height={400}
+          className="object-cover w-full h-auto"
+        />
+      </div>
+    </section>
+  );
+};
+
+// Back to Top Button Component
+const BackToTopButton = () => {
+  const [isVisible, setIsVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener('scroll', toggleVisibility);
+    return () => window.removeEventListener('scroll', toggleVisibility);
+  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50" dir="rtl">
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-6 md:py-8">
-        {/* Hero Section */}
-        <HeroSection />
+  if (!isVisible) return null;
 
-        {/* Search Section */}
-        <div className="mt-8 mb-12">
-          <div className="bg-white rounded-xl shadow-md p-4 md:p-6">
-            <h2 className="text-xl font-bold mb-4">جستجوی پیشرفته</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="نام محصول"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-              <div className="relative">
-                <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                  <option value="">استان مبدا صید</option>
-                  <option value="bushehr">بوشهر</option>
-                  <option value="bandar-abbas">بندرعباس</option>
-                  <option value="gilan">گیلان</option>
-                </select>
-              </div>
-              <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                جستجو
-              </button>
+  return (
+    <button
+      onClick={scrollToTop}
+      className="fixed bottom-6 left-6 bg-primary text-text-inverse p-3 rounded-full shadow-lg hover:bg-primary-hover transition-all duration-300 z-50 hover:scale-110"
+      aria-label="بازگشت به بالا"
+    >
+      <ArrowUp className="w-5 h-5 md:w-6 md:h-6" />
+    </button>
+  );
+};
+
+// Main Home Page Component
+export default function HomePage() {
+  return (
+    <div className="min-h-screen bg-background" dir="rtl">
+      <main className="flex flex-col gap-30 container mx-auto py-5">
+        <HeroSection />
+        
+        <div className="flex gap-4 items-center container mx-auto px-4 overflow-hidden w-full">
+          {/* Image container */}
+          <div className="w-1/4 shrink-0">
+            <Image
+              src="/images/home/discount.png"
+              alt="Background"
+              height={400}
+              width={400}
+              className="w-full h-full rounded-lg object-cover"
+              priority
+            />
+          </div>
+          
+          {/* CardSection container */}
+          <div className="flex-1 min-w-0 overflow-hidden h-full">
+            <div className="h-full origin-top-left">
+              <CardSection
+                title="تخفیفات ویژه"
+                seeAllLink="/products?discount=true"
+                products={featuredProducts}
+                showArrows={true}
+                slidesToShow={4}
+              />
             </div>
           </div>
         </div>
 
-        {/* Special Discounts Section */}
-        <section className="mb-12">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">تخفیفات ویژه</h2>
-            <Link href="/products?discount=true" className="text-blue-600 hover:text-blue-700">
-              مشاهده همه
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} {...product} />
-            ))}
-          </div>
-        </section>
+        <CardSection
+          title="محصولات تازه امروز"
+          seeAllLink="/products?discount=true"
+          products={freshProducts}
+          showArrows={true}
+          slidesToShow={4}
+        />
 
-        {/* Categories Section */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6">دسته‌بندی محصولات</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((category, index) => (
-              <CategoryCard key={index} {...category} />
-            ))}
-          </div>
-        </section>
+        <BannerGridSection />
 
-        {/* Fresh Products Today */}
-        <section className="mb-12">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">محصولات تازه امروز</h2>
-            <Link href="/products?sort=newest" className="text-blue-600 hover:text-blue-700">
-              مشاهده همه
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {freshProducts.map((product) => (
-              <ProductCard key={product.id} {...product} />
-            ))}
-            <div className="bg-gradient-to-br from-teal-500 to-blue-600 rounded-xl p-6 flex flex-col justify-center text-white">
-              <h3 className="text-xl font-bold mb-2">میگو تازه جنوب</h3>
-              <p className="mb-4">مستقیم از دریای عمان</p>
-              <Link href="/products?category=shrimp" className="text-white underline">
-                مشاهده انواع میگو →
-              </Link>
-            </div>
-          </div>
-        </section>
+        <CardSection
+          title="محصولات پرفروش"
+          seeAllLink="/products?sort=bestselling"
+          products={bestSellingProducts}
+          showArrows={true}
+          slidesToShow={4}
+        />
 
-        {/* Best Selling Section */}
-        <section className="mb-12">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">محصولات پرفروش</h2>
-            <Link href="/products?sort=bestselling" className="text-blue-600 hover:text-blue-700">
-              مشاهده همه
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} {...product} />
-            ))}
-          </div>
-        </section>
-
-        {/* Benefits Section */}
-        <section className="mb-12 bg-white rounded-xl shadow-md p-6 md:p-8">
-          <h2 className="text-2xl font-bold text-center mb-8">مزایای سفره‌شما</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <FeatureCard key={index} {...feature} />
-            ))}
-          </div>
-          <div className="mt-8 text-center text-sm text-gray-500">
-            <p>تأمین مستقیم از سه دریا: خلیج فارس، سواحل مکران، خزر</p>
-          </div>
-        </section>
-
-        {/* Cities Section */}
-        <section className="mb-12">
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <h3 className="font-bold mb-3">ارسال به سراسر ایران</h3>
-            <div className="flex flex-wrap gap-2">
-              {cities.map((city) => (
-                <span key={city} className="px-3 py-1 bg-gray-100 rounded-full text-sm">
-                  {city}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <section className="mb-12">
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <h3 className="font-bold text-lg mb-4">سوالات متداول</h3>
-            <div className="space-y-3">
-              <div className="border-b pb-3">
-                <button className="flex justify-between items-center w-full text-right font-semibold">
-                  آیا امکان ارسال به تمام نقاط ایران وجود دارد؟
-                  <span className="text-blue-600">+</span>
-                </button>
-              </div>
-              <div className="border-b pb-3">
-                <button className="flex justify-between items-center w-full text-right font-semibold">
-                  چگونه مطمئن شویم محصول تازه است؟
-                  <span className="text-blue-600">+</span>
-                </button>
-              </div>
-              <div className="border-b pb-3">
-                <button className="flex justify-between items-center w-full text-right font-semibold">
-                  آیا محصولات منجمد شده نیز وجود دارد؟
-                  <span className="text-blue-600">+</span>
-                </button>
-              </div>
-              <div className="border-b pb-3">
-                <button className="flex justify-between items-center w-full text-right font-semibold">
-                  آیا امکان خرید فیله‌شده وجود دارد؟
-                  <span className="text-blue-600">+</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Blog Section */}
-        <section className="mb-12">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">آخرین مقالات</h2>
-            <Link href="/essays" className="text-blue-600 hover:text-blue-700">
-              مشاهده همه
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="bg-white rounded-xl shadow-md overflow-hidden">
-                <div className="aspect-video relative bg-gray-200">
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                    تصویر مقاله
-                  </div>
-                </div>
-                <div className="p-4">
-                  <div className="text-gray-500 text-sm mb-2">۱۴۰۳/۰۹/۱۲</div>
-                  <h3 className="font-bold mb-2">بهترین انتخاب</h3>
-                  <Link href={`/essays/sample-${item}`} className="text-blue-600 text-sm">
-                    ادامه مطلب →
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Support Section */}
-        <section className="mb-12">
-          <div className="bg-gradient-to-r from-blue-600 to-teal-500 rounded-xl p-6 md:p-8 text-center text-white">
-            <h3 className="text-2xl font-bold mb-3">پشتیبانی همیشگی، همراه شماست</h3>
-            <p className="mb-6">پاسخ‌گوی سوالات و نیازهای شماست.</p>
-            <Link 
-              href="/contact"
-              className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-            >
-              تماس با پشتیبانی
-            </Link>
-          </div>
-        </section>
+        <BenefitsSection />
+        <FAQSection />
+        <BlogSection />
+        <SupportSection />
       </main>
 
-      {/* Back to Top Button */}
-      <button
-        onClick={scrollToTop}
-        className="fixed bottom-6 left-6 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors z-50"
-        aria-label="بازگشت به بالا"
-      >
-        <ArrowUp className="w-6 h-6" />
-      </button>
+      <BackToTopButton />
     </div>
   );
 }

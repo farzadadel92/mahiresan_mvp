@@ -2,9 +2,10 @@ import React from 'react';
 
 interface BagIconProps extends React.SVGProps<SVGSVGElement> {
   className?: string;
+  hasBackground?: boolean; // Add this prop
 }
 
-const BagIcon: React.FC<BagIconProps> = ({ className, ...props }) => {
+const BagIcon: React.FC<BagIconProps> = ({ className, hasBackground = true, ...props }) => {
   return (
     <svg
       width="48"
@@ -15,7 +16,9 @@ const BagIcon: React.FC<BagIconProps> = ({ className, ...props }) => {
       className={className}
       {...props}
     >
-      <rect width="48" height="48" rx="8" fill="#F9F9FC" />
+      {hasBackground && (
+        <rect width="48" height="48" rx="8" fill="#F9F9FC" />
+      )}
       <path
         opacity="0.5"
         d="M16.0828 22.8943C16.5217 20.5534 16.7412 19.3829 17.5743 18.6915C18.4075 18 19.5984 18 21.98 18H26.0209C28.4026 18 29.5934 18 30.4266 18.6915C31.2598 19.3829 31.4792 20.5534 31.9181 22.8943L32.6681 26.8943C33.2853 30.186 33.5939 31.8318 32.6942 32.9159C31.7945 34 30.12 34 26.7709 34H21.23C17.881 34 16.2064 34 15.3067 32.9159C14.407 31.8318 14.7156 30.186 15.3328 26.8943L16.0828 22.8943Z"

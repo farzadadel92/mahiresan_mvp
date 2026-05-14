@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import { ThemeProvider } from "@/src/contexts/ThemeContext"; // <-- import
 
-const geistSans = Geist({
+const geistSans = localFont({
+  src: "../../public/fonts/Vazirmatn-Regular.woff2",
   variable: "--font-geist-sans",
-  subsets: ["latin"],
+  weight: "100 900",
 });
 
-const geistMono = Geist_Mono({
+const geistMono = localFont({
+  src: "../../public/fonts/Vazirmatn-Bold.woff2",
   variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: "100 900",
 });
 
 export const metadata: Metadata = {
@@ -24,10 +27,16 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="fa" // Persian
+      dir="rtl"
+      suppressHydrationWarning // Prevent hydration issues
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
